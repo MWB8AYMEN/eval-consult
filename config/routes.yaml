@@ -1,0 +1,14 @@
+#index:
+#    path: /
+#    defaults: { _controller: 'App\Controller\DefaultController::index' }
+
+homepage:
+    path: /
+    controller: App\Controller\HomeController::index
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+category:
+    resource: 'App\Controller\CategoryController'
+    type:     rest
+    prefix: /api
