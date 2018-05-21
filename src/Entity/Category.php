@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Swagger\Annotations as SWG;
 /**
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -16,16 +16,19 @@ class Category
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(description="The unique identifier of the category.")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=45, nullable=true)
+     * @SWG\Property(type="string", maxLength=45)
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @SWG\Property(type="string", maxLength=255)
      */
     private $description;
 

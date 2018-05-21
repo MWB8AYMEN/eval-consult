@@ -1,0 +1,13 @@
+nelmio_api_doc:
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+        host_patterns:
+            - ^api\.
+
+    documentation:
+            host: dev.aymen/api/
+            info:
+                title: Consults API
+                description: This is Consults API REST!
+                version: 1.0.0

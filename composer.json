@@ -2,9 +2,19 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.0.8",
+        "php": ">=7.1",
+        "ext-curl": "*",
+        "ext-date": "*",
         "ext-iconv": "*",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-pdo_mysql": "*",
+        "doctrine/annotations": "1.4.*",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "2.5.6",
         "friendsofsymfony/rest-bundle": "^2.3",
+        "friendsofsymfony/user-bundle": "^2.1",
+        "nelmio/api-doc-bundle": "^3.2",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^3.4",
         "symfony/console": "^3.4",
@@ -16,6 +26,7 @@
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
         "symfony/process": "^3.4",
+        "symfony/requirements-checker": "^1.1",
         "symfony/security-bundle": "^3.4",
         "symfony/serializer-pack": "*",
         "symfony/swiftmailer-bundle": "^3.1",
@@ -39,6 +50,9 @@
         "preferred-install": {
             "*": "dist"
         },
+        "platform": {
+            "php": "7.1"
+        },
         "sort-packages": true
     },
     "autoload": {
@@ -59,7 +73,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
+            "requirements-checker": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
