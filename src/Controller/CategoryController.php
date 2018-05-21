@@ -51,24 +51,22 @@ class CategoryController extends Controller
      * @SWG\Tag(name="rewards")
      * @Security(name="Bearer")
      */
-    public function cget()
+    public function cgetAction()
     {
         $em = $this->getDoctrine();
-
-
 
         $catRepositoty = $em->getRepository(Category::class)->findAll();
 
         if ($catRepositoty){
-            $categories = array();
+
             foreach ($catRepositoty as $cat){
                 $category['id'] = $cat->getId();
                 $category['name'] = $cat->getName();
                 $category['description'] = $cat->getDescription();
                 $response['result'][] = $category;
             }
-
-            $jsonResponse = new JsonResponse(array($response,'code'=>200));
+            $response['code'] = 200;
+            $jsonResponse = new JsonResponse($response);
 
         }else{
             $jsonResponse = new JsonResponse( array('err'=> 'no categories exists'), array('code' => 404));
@@ -76,7 +74,15 @@ class CategoryController extends Controller
 
 
         return $jsonResponse;
+    }
 
+    public function noteAction()
+    {
+        return array('action' => 'new');
+    }
 
+    public function editAction()
+    {
+        return array('action' => 'edit');
     }
 }
