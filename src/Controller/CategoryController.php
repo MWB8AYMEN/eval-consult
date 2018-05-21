@@ -51,7 +51,7 @@ class CategoryController extends Controller
      * @SWG\Tag(name="rewards")
      * @Security(name="Bearer")
      */
-    public function cget()
+    public function cgetAction()
     {
         $em = $this->getDoctrine();
 
@@ -76,7 +76,15 @@ class CategoryController extends Controller
 
 
         return $jsonResponse;
+    }
 
+    public function newAction()
+    {
+        return array('action' => 'new');
+    }
 
+    public function editAction()
+    {
+        return array('action' => 'edit');
     }
 }
