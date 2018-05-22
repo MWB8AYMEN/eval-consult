@@ -78,7 +78,7 @@ class CategoryController extends Controller
         return $jsonResponse;
     }
 
-    public function newAction()
+    public function noteAction()
     {
         return array('action' => 'new');
     }
