@@ -33,7 +33,7 @@ class Category
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserCategory", mappedBy="category", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="ConsultCategory", mappedBy="category", fetch="EXTRA_LAZY")
      */
     private $categoryUsers;
 
@@ -72,14 +72,14 @@ class Category
     }
 
     /**
-     * @return Collection|UserCategory[]
+     * @return Collection|ConsultCategory[]
      */
     public function getCategoryUsers(): Collection
     {
         return $this->categoryUsers;
     }
 
-    public function addCategoryUser(UserCategory $categoryUser): self
+    public function addCategoryUser(ConsultCategory $categoryUser): self
     {
         if (!$this->categoryUsers->contains($categoryUser)) {
             $this->categoryUsers[] = $categoryUser;
@@ -89,7 +89,7 @@ class Category
         return $this;
     }
 
-    public function removeCategoryUser(UserCategory $categoryUser): self
+    public function removeCategoryUser(ConsultCategory $categoryUser): self
     {
         if ($this->categoryUsers->contains($categoryUser)) {
             $this->categoryUsers->removeElement($categoryUser);

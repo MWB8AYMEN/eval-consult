@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\UserCategory;
+use App\Entity\ConsultCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method UserCategory|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserCategory|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserCategory[]    findAll()
- * @method UserCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ConsultCategory|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ConsultCategory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ConsultCategory[]    findAll()
+ * @method ConsultCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class UserCategoryRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, UserCategory::class);
+        parent::__construct($registry, ConsultCategory::class);
     }
 
 //    /**

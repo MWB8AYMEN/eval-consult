@@ -1,19 +1,20 @@
 <?php
-// src/Controller/LuckyController.php
 namespace App\Controller;
 
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class HomeController extends Controller
 {
+    /**
+     * @Route("/",name="homepage")
+     * @return Response
+     */
     public function index()
     {
-        $env = $this->container->get( 'kernel' )->getEnvironment();
-        dump($_SERVER['DATABASE_URL']);
 
-        return new Response(
-            '<html><body> Bonjour, je suis '.$env.'</body></html>'
-        );
+        return $this->render('Home/index.html.twig');
     }
 }
