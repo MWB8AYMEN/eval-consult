@@ -22,9 +22,8 @@ use Psr\Log\LoggerInterface;
  */
 class CategoryController extends FOSRestController
 {
-
-
     public function cgetAction(Request $request)
+
     {
 
         $em = $this->getDoctrine();
@@ -34,13 +33,13 @@ class CategoryController extends FOSRestController
         $catRepositoty = $em->getRepository(Category::class);
         $categories = $catRepositoty->findAll();
 
-        //$mobile = $this->isMobile($request);
+        $mobile = $this->isMobile($request);
 
         $logger = $this->get('logger');
 
         $logger->info('request : '.$request->headers->get('User-Agent'));
 
-        /*if($mobile){
+        if($mobile){
 
             if ($categories){
 
@@ -60,12 +59,12 @@ class CategoryController extends FOSRestController
 
             return $jsonResponse;
 
-        } else {*/
+        } else {
             $view->setTemplate('category/index.html.twig');
             $view->setTemplateData(array('categories' => $categories));
 
             return $view;
-        //}
+        }
     }
 
     function isMobile($request)
@@ -126,17 +125,29 @@ class CategoryController extends FOSRestController
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
+        $em = $this->getDoctrine();
 
+        $catRepositoty = $em->getRepository(Category::class)->findAll();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->flush();
-            return $this->redirectToRoute('get_categories');
+        if ($catRepositoty) {
+
+            foreach ($catRepositoty as $cat) {
+                $category['id'] = $cat->getId();
+                $category['name'] = $cat->getName();
+                $category['description'] = $cat->getDescription();
+                $response['result'][] = $category;
+            }
+            $response['code'] = 200;
+            $jsonResponse = new JsonResponse($response);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($category);
+                $em->flush();
+                return $this->redirectToRoute('get_categories');
+            }
         }
-
-
-
+        
         return $this->render('category/form.html.twig',
             array('form'=>$form->createView()));
     }
