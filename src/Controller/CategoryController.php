@@ -38,10 +38,9 @@ class CategoryController extends FOSRestController
 
         $logger->info('request : '.$request->headers->get('User-Agent'));
 
-        if($mobile){
-            if ($categories){
-
-                foreach ($categories as $cat){
+        if ($mobile) {
+            if ($categories) {
+                foreach ($categories as $cat) {
                     $categorie = array();
                     $categorie['id'] = $cat->getId();
                     $categorie['name'] = $cat->getName();
@@ -51,16 +50,14 @@ class CategoryController extends FOSRestController
                 }
                 $response['code'] = 200;
                 $jsonResponse = new JsonResponse($response);
-
-            }else{
-                $jsonResponse = new JsonResponse( array('err'=> 'no categories exists'), array('code' => 404));
+            } else {
+                $jsonResponse = new JsonResponse(array('err'=> 'no categories exists'), array('code' => 404));
             }
 
             return $jsonResponse;
-
         } else {
-           $view->setTemplate('category/index.html.twig');
-           $view->setTemplateData(array('categories' => $categories));
+            $view->setTemplate('category/index.html.twig');
+            $view->setTemplateData(array('categories' => $categories));
 
             return $view;
         }
@@ -70,13 +67,12 @@ class CategoryController extends FOSRestController
      * @param Request $request
      * @return bool
      */
-    function isMobile($request)
+    public function isMobile($request)
     {
         return !!preg_match('/(alcatel|amoi|android|avantgo|blackberry|benq|cell|cricket|docomo|elaine|htc|
                      iemobile|iphone|ipad|ipaq|ipod|j2me|java|midp|mini|mmp|mobi|motorola|nec-|nokia|palm|panasonic|
                      philips|phone|playbook|sagem|sharp|sie-|silk|smartphone|sony|symbian|t-mobile|telus|up\.browser|
                      up\.link|vodafone|wap|webos|wireless|xda|xoom|zte|okhttp|iOS)/i', $request->headers->get('user-agent'));
-
     }
 
     /**
@@ -97,8 +93,7 @@ class CategoryController extends FOSRestController
         $consultant = $em->getRepository(Consultant::class)->findOneBy(array('username'=>$username));
 
 
-        foreach($catNotes as $cat){
-
+        foreach ($catNotes as $cat) {
             $category = $em->getRepository(Category::class)->findOneBy(array('id'=>$cat['category']));
             $consultantCategory = new ConsultCategory();
             $consultantCategory->setconsultant($consultant);
@@ -111,8 +106,7 @@ class CategoryController extends FOSRestController
 
         $em->flush();
 
-       return new JsonResponse($catNotes);
-
+        return new JsonResponse($catNotes);
     }
 
     /**
@@ -136,8 +130,10 @@ class CategoryController extends FOSRestController
         }
 
 
-        return $this->render('category/form.html.twig',
-            array('form' => $form->createView()));
+        return $this->render(
+            'category/form.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
     /**
@@ -148,7 +144,6 @@ class CategoryController extends FOSRestController
      */
     public function editAction(Request $request, Category $category)
     {
-
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
@@ -160,15 +155,17 @@ class CategoryController extends FOSRestController
             return $this->redirectToRoute('get_categories');
         }
 
-        return $this->render('category/form.html.twig',
-            array('form'=>$form->createView()));
+        return $this->render(
+            'category/form.html.twig',
+            array('form'=>$form->createView())
+        );
     }
 
     /**
      * @return \FOS\RestBundle\View\View
      */
-    public function getArchiveAction(){
-
+    public function getArchiveAction()
+    {
         $view = $this->view();
         $em = $this->getDoctrine();
         $consultCats = $em->getRepository(ConsultCategory::class)->findAll();
@@ -177,6 +174,5 @@ class CategoryController extends FOSRestController
         $view->setTemplateData(array('catConsults' => $consultCats));
 
         return $view;
-
     }
 }

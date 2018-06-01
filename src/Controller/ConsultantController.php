@@ -21,7 +21,6 @@ class ConsultantController extends FOSRestController
      */
     public function cgetAction(Request $request)
     {
-
         $em = $this->getDoctrine();
         $view = $this->view();
 
@@ -32,7 +31,6 @@ class ConsultantController extends FOSRestController
         $view->setTemplateData(array('consultants' => $consultants));
 
         return $view;
-
     }
 
     /**
@@ -55,19 +53,19 @@ class ConsultantController extends FOSRestController
 
 
 
-        return $this->render('consultant/form.html.twig',
-            array('form'=>$form->createView()));
+        return $this->render(
+            'consultant/form.html.twig',
+            array('form'=>$form->createView())
+        );
     }
 
     /**
-     * @ParamConverter("consultant", options={"mapping": {"consultant"   : "id"}})
-     * @REST\Route(path="/consultants/{consultant}/edit", methods={"GET","POST"})
      * @param Request $request
-     * @return mixed
+     * @param Consultant $consultant
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Consultant $consultant)
     {
-
         $form = $this->createForm(ConsultantType::class, $consultant);
         $form->handleRequest($request);
 
@@ -79,7 +77,9 @@ class ConsultantController extends FOSRestController
             return $this->redirectToRoute('get_consultants');
         }
 
-        return $this->render('consultant/form.html.twig',
-            array('form'=>$form->createView()));
+        return $this->render(
+            'consultant/form.html.twig',
+            array('form'=>$form->createView())
+        );
     }
 }

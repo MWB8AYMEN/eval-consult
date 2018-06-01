@@ -19,6 +19,21 @@ services:
     networks:
       - default
       - some-net
+  varnish:
+    build: ./dockerfile/varnish/
+    container_name: cache-server
+    ports:
+      - "80:6081"
+    links:
+      - app-server
+    environment:
+      - BACKENDS_PROBE_INTERVAL=3s
+      - BACKENDS_PROBE_TIMEOUT=1s
+      - BACKENDS_PROBE_WINDOW=3
+      - BACKENDS_PROBE_THRESHOLD=2
+    networks:
+      - default
+      - some-net
 
 networks:
   some-net:
