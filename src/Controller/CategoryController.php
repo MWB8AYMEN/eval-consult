@@ -8,24 +8,23 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as REST;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Category;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\CategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Psr\Log\LoggerInterface;
 
 /**
- *
- *
- * @REST\RouteResource("category")
-
+ * @REST\RouteResource("Category")
+ * @REST\NamePrefix("")
  */
 class CategoryController extends FOSRestController
 {
+    /**
+     * @param Request $request
+     *
+     * @return \FOS\RestBundle\View\View|JsonResponse
+     */
     public function cgetAction(Request $request)
-
     {
-
         $em = $this->getDoctrine();
         $view = $this->view();
 
@@ -40,15 +39,15 @@ class CategoryController extends FOSRestController
         $logger->info('request : '.$request->headers->get('User-Agent'));
 
         if($mobile){
-
             if ($categories){
 
                 foreach ($categories as $cat){
-                    $this->get('logger')->info('request : '.$cat->getId());
-                    $category['id'] = $cat->getId();
-                    $category['name'] = $cat->getName();
-                    $category['description'] = $cat->getDescription();
-                    $response['result'][] = $category;
+                    $categorie = array();
+                    $categorie['id'] = $cat->getId();
+                    $categorie['name'] = $cat->getName();
+                    $categorie['description'] = $cat->getDescription();
+
+                    $response['result'][] = $categorie;
                 }
                 $response['code'] = 200;
                 $jsonResponse = new JsonResponse($response);
@@ -60,36 +59,35 @@ class CategoryController extends FOSRestController
             return $jsonResponse;
 
         } else {
-            $view->setTemplate('category/index.html.twig');
-            $view->setTemplateData(array('categories' => $categories));
+           $view->setTemplate('category/index.html.twig');
+           $view->setTemplateData(array('categories' => $categories));
 
             return $view;
         }
     }
 
+    /**
+     * @param Request $request
+     * @return bool
+     */
     function isMobile($request)
     {
-        if (preg_match('/(alcatel|amoi|android|avantgo|blackberry|benq|cell|cricket|docomo|elaine|htc|
+        return !!preg_match('/(alcatel|amoi|android|avantgo|blackberry|benq|cell|cricket|docomo|elaine|htc|
                      iemobile|iphone|ipad|ipaq|ipod|j2me|java|midp|mini|mmp|mobi|motorola|nec-|nokia|palm|panasonic|
                      philips|phone|playbook|sagem|sharp|sie-|silk|smartphone|sony|symbian|t-mobile|telus|up\.browser|
-                     up\.link|vodafone|wap|webos|wireless|xda|xoom|zte|okhttp)/i', $request->headers->get('user-agent')
-        )
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+                     up\.link|vodafone|wap|webos|wireless|xda|xoom|zte|okhttp|iOS)/i', $request->headers->get('user-agent'));
+
     }
 
     /**
-     * @REST\Route(methods={"POST"})
      * @param Request $request
-     * @return mixed
+     * @return JsonResponse $catNotes
      */
-
-    public function noteAction(Request $request)
+    public function postNoteAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
+        //$request = $this->getRequest();
 
         $catNotes = $request->request->get('categories');
 
@@ -110,13 +108,16 @@ class CategoryController extends FOSRestController
             $consultantCategory->setInsertedAt(new \DateTime("now"));
             $em->persist($consultantCategory);
         }
+
         $em->flush();
-       return $catNotes;
+
+       return new JsonResponse($catNotes);
 
     }
 
     /**
-     * @REST\Route(methods={"GET","POST"})
+     * @REST\View()
+     * @REST\Route(methods={"GET", "POST"})
      * @param Request $request
      * @return mixed
      */
@@ -125,31 +126,18 @@ class CategoryController extends FOSRestController
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
-        $em = $this->getDoctrine();
+        $em = $this->getDoctrine()->getManager();
 
-        $catRepositoty = $em->getRepository(Category::class)->findAll();
 
-        if ($catRepositoty) {
-
-            foreach ($catRepositoty as $cat) {
-                $category['id'] = $cat->getId();
-                $category['name'] = $cat->getName();
-                $category['description'] = $cat->getDescription();
-                $response['result'][] = $category;
-            }
-            $response['code'] = 200;
-            $jsonResponse = new JsonResponse($response);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($category);
-                $em->flush();
-                return $this->redirectToRoute('get_categories');
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($category);
+            $em->flush();
+            return $this->redirectToRoute('get_categories');
         }
-        
+
+
         return $this->render('category/form.html.twig',
-            array('form'=>$form->createView()));
+            array('form' => $form->createView()));
     }
 
     /**
@@ -174,5 +162,21 @@ class CategoryController extends FOSRestController
 
         return $this->render('category/form.html.twig',
             array('form'=>$form->createView()));
+    }
+
+    /**
+     * @return \FOS\RestBundle\View\View
+     */
+    public function getArchiveAction(){
+
+        $view = $this->view();
+        $em = $this->getDoctrine();
+        $consultCats = $em->getRepository(ConsultCategory::class)->findAll();
+
+        $view->setTemplate('category/archives.html.twig');
+        $view->setTemplateData(array('catConsults' => $consultCats));
+
+        return $view;
+
     }
 }

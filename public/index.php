@@ -15,7 +15,6 @@ require __DIR__.'/../vendor/autoload.php';
     var_dump('yeees');exit;
     (new Dotenv())->load(__DIR__.'/../.env');
 }*/
-
 $env = $_SERVER['APP_ENV'] ?? 'dev';
 $debug = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));
 

@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  app-server:
+    build: ./dockerfile/server
+    container_name: apache-php-app
+    volumes:
+      - ./:/var/www/html/myapp
+    ports:
+      - 8080:80
+    networks:
+      - default
+      - some-net
+  db-imgage:
+    build: ./dockerfile/db/
+    container_name: dbase-app
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - default
+      - some-net
+
+networks:
+  some-net:
+    driver: bridge
+  default:
+    driver: bridge

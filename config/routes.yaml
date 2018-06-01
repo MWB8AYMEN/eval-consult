@@ -3,21 +3,18 @@
 #    defaults: { _controller: 'App\Controller\DefaultController::index' }
 
 homepage:
-    path: /
-    controller: App\Controller\HomeController::index
+    resource: 'App\Controller\CategoryController'
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
-category:
+Category:
     resource: 'App\Controller\CategoryController'
     type:     rest
-    prefix: /
 
-consultant:
+Consultant:
     resource: 'App\Controller\ConsultantController'
     type:     rest
-    prefix: /
 
 app.swagger_ui:
     path: /doc

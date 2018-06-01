@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 {% endblock %}
 {% block title %}EVAl CONSULTS{% endblock %}
 
-{% block body %}
-    {{ parent() }}
 
-    {%  block content_header %}
+    {% block content_header %}
         <a href="{{ path('new_consultant') }}">
             <button type="button" class="btn btn-block btn-default btn-lg btn-new">Nouveau Consultant</button>
         </a>
@@ -23,30 +22,36 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table id="example2" class="table table-bordered table-striped" >
+                        <table id="data" class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th>Login</th>
                                 <th>Firstname</th>
                                 <th>Lastname</th>
                                 <th>Plateform</th>
                                 <th>Fonction</th>
                                 <th>Nb Expriences</th>
                                 <th></th>
+                            </tr>
                             </thead>
                             <tbody>
                             {% for consultant in consultants %}
-                            <tr>
-                                <td width="200">{{ consultant.username }}</td>
-                                <td width="200">{{ consultant.firstname }}</td>
-                                <td width="200">{{ consultant.lastname }}</td>
-                                <td width="200">{{ consultant.plateform }}</td>
-                                <td width="200">{{ consultant.fonction }}</td>
-                                <td width="200">{{ consultant.nbExperiences }}</td>
-                                <td width="200"><a href="{{ path('edit_consultant',{'consultant' : consultant.id}) }}" class="btn btn-app">
-                                        <i class="fa fa-edit"></i> Edit
-                                    </a></td>
-                            </tr>
+                                <tr>
+                                    <td width="200">{{ consultant.username }}</td>
+                                    <td width="200">{{ consultant.firstname }}</td>
+                                    <td width="200">{{ consultant.lastname }}</td>
+                                    <td width="200">{{ consultant.plateform }}</td>
+                                    <td width="200">{{ consultant.fonction }}</td>
+                                    <td width="200">{{ consultant.nbExperiences }}</td>
+                                    <td width="200"><a
+                                                href="{{ path('edit_consultant',{'consultant' : consultant.id}) }}"
+                                                class="btn btn-app">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a></td>
+                                </tr>
                             {% endfor %}
+                            </tbody>
+                            <tfoot>
                             </tfoot>
                         </table>
                     </div>
@@ -56,27 +61,4 @@
         </div>
     {% endblock %}
 
-    {% block javascripts %}
-        {{ parent() }}
-        <script src="{{ asset('../../bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-        <script src="{{ asset('../../bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
-        <script src="{{ asset('../../dist/js/adminlte.min.js')}}"></script>
-        <script src="{{ asset('../../dist/js/demo.js')}}"></script>
-        <script>
-            $(function () {
-                $('#example2').DataTable({
-                    'paging'      : false,
-                    'lengthChange': false,
-                    'searching'   : false,
-                    'ordering'    : true,
-                    'info'        : true,
-                    'autoWidth'   : false
-                })
-            })
-        </script>
-    {% endblock %}
-
-
-{% endblock %}
 

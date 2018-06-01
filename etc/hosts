@@ -1,0 +1,23 @@
+127.0.0.1	localhost
+#127.0.1.1	lab5testplatform.dev
+192.168.1.91    prod.aymen dev.aymen int.aymen
+#127.0.0.1	ASUS
+#127.0.0.1	lab5testplatform.dev
+#127.0.0.1	hm-gmao.dev
+#127.0.0.1	drupaltest.local
+#127.0.0.1       d8demo.dev
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+192.168.56.103  opa.arte.local  # VAGRANT: 82c2d36fbf7b7d4a3ffef2356e219e1d (web) / 74fcf81e-ca26-4f04-a198-3ce0df4fc0fb
+192.168.56.103  api-player.arte.local  # VAGRANT: 82c2d36fbf7b7d4a3ffef2356e219e1d (web) / 74fcf81e-ca26-4f04-a198-3ce0df4fc0fb
+192.168.56.103  player.arte.local  # VAGRANT: 82c2d36fbf7b7d4a3ffef2356e219e1d (web) / 74fcf81e-ca26-4f04-a198-3ce0df4fc0fb
+192.168.56.103  oauth.arte.local  # VAGRANT: 82c2d36fbf7b7d4a3ffef2356e219e1d (web) / 74fcf81e-ca26-4f04-a198-3ce0df4fc0fb
+192.168.56.103  api.arte.local  # VAGRANT: 82c2d36fbf7b7d4a3ffef2356e219e1d (web) / 74fcf81e-ca26-4f04-a198-3ce0df4fc0fb
+192.168.56.103  webgrind.arte.local  # VAGRANT: 82c2d36fbf7b7d4a3ffef2356e219e1d (web) / 74fcf81e-ca26-4f04-a198-3ce0df4fc0fb
+192.168.56.103  feed-generator.arte.local  # VAGRANT: 82c2d36fbf7b7d4a3ffef2356e219e1d (web) / 74fcf81e-ca26-4f04-a198-3ce0df4fc0fb
+192.168.56.103  developers.arte.local  # VAGRANT: 82c2d36fbf7b7d4a3ffef2356e219e1d (web) / 74fcf81e-ca26-4f04-a198-3ce0df4fc0fb
+172.16.50.139 vmdev.ekosport.fr eymeric.develop slider.eymeric.develop eko.ezael.net yamina.develop aymen.develop

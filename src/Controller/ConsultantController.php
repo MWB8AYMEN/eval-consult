@@ -10,14 +10,15 @@ use App\Form\ConsultantType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
- *
- *
  * @REST\RouteResource("consultant")
 
  */
 class ConsultantController extends FOSRestController
 {
-
+    /**
+     * @param Request $request
+     * @return \FOS\RestBundle\View\View
+     */
     public function cgetAction(Request $request)
     {
 
@@ -35,7 +36,6 @@ class ConsultantController extends FOSRestController
     }
 
     /**
-     * @REST\Route(methods={"GET","POST"})
      * @param Request $request
      * @return mixed
      */
@@ -60,7 +60,7 @@ class ConsultantController extends FOSRestController
     }
 
     /**
-     * @ParamConverter("category", options={"mapping": {"category"   : "id"}})
+     * @ParamConverter("consultant", options={"mapping": {"consultant"   : "id"}})
      * @REST\Route(path="/consultants/{consultant}/edit", methods={"GET","POST"})
      * @param Request $request
      * @return mixed
